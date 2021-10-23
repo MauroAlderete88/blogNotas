@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 //A este se le inyecta la database y ejecuta el modelo. Todos los metodos con return, estos son usados por el interactor
 
-class dataBaseProvider : repositoryRoom {
+class dataBaseProvider @Inject constructor() : repositoryRoom {
 
     @Inject
     lateinit var listaDao: listaDao
@@ -20,6 +20,7 @@ class dataBaseProvider : repositoryRoom {
     lateinit var  listaDeListasDao: listaDeListasDao
     @Inject
     lateinit var  pathImageDao : pathImageDao
+
 
     override suspend fun nuevaLista(
         nombre: String,
@@ -67,6 +68,7 @@ class dataBaseProvider : repositoryRoom {
     override suspend fun agregarImagenes(pathImage: pathImage) {
         pathImageDao.insert(pathImage)
     }
+
 
     override suspend fun mostrarListas(): List<listaDeListas> {
          val resultado : List<listaDeListas> = listaDeListasDao.getListas()

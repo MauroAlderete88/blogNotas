@@ -1,41 +1,53 @@
 package ui.view.HomeActivity
 
-import android.net.Uri
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.example.blognotas.R
+import com.example.blognotas.databinding.HomeActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
-import data.model.room.dao.listaDeListasDao
+import data.enumStyleColors.colores
+import data.enumStyleColors.providerStyle
 import data.model.room.dao.pathImageDao
 import data.model.room.entities.pathImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ui.view.EditActivity.EditActivity
 import javax.inject.Inject
+
 
 
 @AndroidEntryPoint
 class HomeActivity() : AppCompatActivity() {
     @Inject lateinit var  ruta : pathImageDao
-   // private val viewModel: HomeActivityViewModel by viewModels()
+    @Inject lateinit var styles : providerStyle
+
+     private val viewModel: HomeActivityViewModel by viewModels()
+     private lateinit var binding : HomeActivityBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
+        binding = HomeActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
-
+        binding.nuevaLista.setOnClickListener {
+            val intent = Intent(this,EditActivity::class.java)
+            startActivity(intent)
+        }
     }
 
-
-    //Metodo que ejecuta el guardado de imagenes en bd.Se usa una sola vez cuando se crea la bd.
-    private fun inicialityImagePath () {
-        lifecycleScope.launch{
+    /*
+//SACAR DESPUES
+//Metodo que ejecuta el guardado de imagenes en bd.Se usa una sola vez cuando se crea la bd.
+private fun inicialityImagePath () {
+    lifecycleScope.launch{
         val result = withContext(Dispatchers.IO){
             ruta.insert(pathImage(0,"CARACOL", "drawable-mdpi/caracol"))
             ruta.insert(pathImage(0,"CIERVO", "drawable-mdpi/ciervo"))
@@ -56,7 +68,10 @@ class HomeActivity() : AppCompatActivity() {
             ruta.insert(pathImage(0,"VACA", "drawable-mdpi/vaca"))
             ruta.insert(pathImage(0,"ZORRO", "drawable-mdpi/zorro"))
         }
-     }
-    }
 
+    }
 }
+
+ */
+}
+

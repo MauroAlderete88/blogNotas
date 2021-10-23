@@ -8,11 +8,10 @@ import data.model.room.dao.pathImageDao
 import data.model.room.entities.lista
 import data.model.room.entities.listaDeListas
 import data.model.room.entities.pathImage
-import data.model.room.entities.pathStyleGradients
 
 @Database(
-    entities = [listaDeListas::class , lista::class, pathImage::class, pathStyleGradients::class],
-    version = 2
+    entities = [listaDeListas::class , lista::class, pathImage::class],
+    version = 3
 )
 
 abstract class listDB : RoomDatabase() {

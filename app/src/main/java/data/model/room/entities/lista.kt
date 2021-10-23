@@ -10,7 +10,7 @@ data class lista(
     val nombre : String,
     val contenido : String,
     val pathImage : String,
-    val backgroundFile : String,
+    val backgroundColor: String,
     val pass : String,
     val lastDate : String
 )

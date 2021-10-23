@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import data.enumStyleColors.colores
 import data.model.room.listDB
 import javax.inject.Singleton
 
@@ -33,4 +34,5 @@ object roomModule {
     @Singleton
     @Provides
     fun pathImageDao(db: listDB) = db.pathImageDao()
+
 }
