@@ -11,10 +11,19 @@ class InteractorEditActivityImp @Inject constructor(
 
 
 
-    override suspend fun guardarNuevaLista(titulo : String , contenido : String , imagen : String , color : String , pass : String): Boolean {
+    override suspend fun guardarNuevaLista(titulo : String ,
+                                           contenido : String ,
+                                           imagen : Int ,
+                                           color : Int ,
+                                           pass : String): Boolean {
         val formato = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         val fechaAct = formato.format(Date())
         val resultado = dataBaseProvider.nuevaLista(titulo,contenido,imagen,color,fechaAct,pass)
+
+            if (resultado ==true){
+                dataBaseProvider.agregarListadeListas(titulo,imagen,color)
+            }
+
         return resultado
     }
 

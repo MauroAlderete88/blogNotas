@@ -8,6 +8,6 @@ data class listaDeListas(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val nombreLista: String,
-    val pathImage: String,
-    val background_path_gradient: String,
+    val pathImage: Int,
+    val background_path_gradient: Int,
 )

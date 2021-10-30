@@ -9,8 +9,8 @@ data class lista(
     val id : Int,
     val nombre : String,
     val contenido : String,
-    val pathImage : String,
-    val backgroundColor: String,
+    val pathImage : Int,
+    val backgroundColor: Int,
     val pass : String,
     val lastDate : String
 )

@@ -2,22 +2,34 @@ package ui.view.EditActivity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.blognotas.R
 import com.example.blognotas.databinding.EditActivityBinding
-import data.enumStyleColors.colores
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import ui.view.EditActivity.adaptersSpinner.adapterSpinnerDegradeBackground
+import ui.view.EditActivity.adaptersSpinner.adapterSpinnerImages
+import ui.view.EditActivity.providers.providersGradientBackground
+import ui.view.EditActivity.providers.providersImages
 import ui.view.HomeActivity.HomeActivity
+import javax.inject.Inject
 
-class EditActivity : AppCompatActivity() {
 
-    private val editmodel : EditActivityViewModel by viewModels()
+@AndroidEntryPoint
+class EditActivity() : AppCompatActivity() {
+
+    private  val editmodel : EditActivityViewModel by viewModels()
+    @Inject lateinit var providersGradient : providersGradientBackground
+    @Inject lateinit var providersImages: providersImages
+
     lateinit var binding: EditActivityBinding
-
+    var iconoElejido:Int = R.drawable.aleatorio_image
+    var background:Int = R.drawable.grandient_01_cardview
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,37 +37,75 @@ class EditActivity : AppCompatActivity() {
         binding = EditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Spinner icons
+        val adapterSpinnerImages = adapterSpinnerImages(this, providersImages.getList())
+        binding.SpinnerImage.adapter = adapterSpinnerImages
 
+        //Spinner degrade
+        val adapterSpinnerGradient = adapterSpinnerDegradeBackground(this,providersGradient.getList())
+        binding.SpinnerGradient.adapter = adapterSpinnerGradient
 
-        binding.bGuardar.setOnClickListener {
+        //Evento del spinner iconos
+        binding.SpinnerImage.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = parent!!.getItemAtPosition(position)
+                iconoElejido = selectedItem.hashCode()
 
-            lifecycleScope.launch{
-                    checksNuls(binding.etTitulo.text.toString(),
-                            binding.contenido.text.toString(),
-                            "@drawable-mdpi/ardilla",
-                            colores.NARANJA.name
-                            ,""
-                    )
-
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //null
             }
 
         }
 
+        //Evento del spinner gradient
+        binding.SpinnerGradient.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = parent!!.getItemAtPosition(position)
+                background = selectedItem.hashCode()
+
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //null
+            }
+
+        }
+
+        //Evento de boton guardar
+        binding.bGuardar.setOnClickListener {
+            lifecycleScope.launch{
+                   checksNuls(binding.etTitulo.text.toString(),
+                            binding.contenido.text.toString(),
+                            iconoElejido,
+                            background,
+                           ""
+                    )
+            }
+        }
+
+
+
+        //Observers
         editmodel.resultado.observe(this,{
             if (it==true){
-                //En realidad iria al view activity pero como no lo cree todavia va a uno cualquiera
-
+                val goHome = Intent (this,HomeActivity::class.java)
+                startActivity(goHome)
+                finish()
             }
         })
 
 
+
     }
-       private suspend fun checksNuls(titulo : String, contenido : String, imagen : String, color : String, pass : String ){
+
+
+
+       private suspend fun checksNuls(titulo : String, contenido : String, imagen : Int, color : Int, pass : String ){
            if (binding.etTitulo.text.toString().equals("")){
                Toast.makeText(this,"Es necesario agregar un titulo.", Toast.LENGTH_SHORT).show()
            } else {
               //Aca se envian al viewModel
-               editmodel.crearLista(titulo , contenido , imagen , color , pass )
+              editmodel.crearLista(titulo , contenido , imagen , color , pass )
            }
        }
 

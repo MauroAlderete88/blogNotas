@@ -1,6 +1,7 @@
 package domain.interactors.homeActivity
 
 import android.graphics.drawable.Drawable
+import data.model.room.dataBaseProvider
 import data.model.room.entities.listaDeListas
 
 
@@ -8,17 +9,16 @@ import data.repository.repositoryRoom
 import javax.inject.Inject
 
 
-class InteractorHomeActivityImp @Inject constructor():InteractorHomeActivity {
-
-    lateinit var repositoryRoomHomeActivity : repositoryRoom
-
+class InteractorHomeActivityImp @Inject constructor(
+        val dataBaseProvider: dataBaseProvider
+):InteractorHomeActivity {
 
     override suspend fun obtenerDatosSegunListaTouch(id:Int) {
-        repositoryRoomHomeActivity.mostrarLista(id)
+        dataBaseProvider.mostrarLista(id)
     }
 
     override suspend fun ObtenerDatosParaRecyclerView() : List<listaDeListas> {
-      val resultado = repositoryRoomHomeActivity.mostrarListas()
+      val resultado = dataBaseProvider.mostrarListas()
       return resultado
     }
 
