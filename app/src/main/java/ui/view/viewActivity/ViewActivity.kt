@@ -3,6 +3,7 @@ package ui.view.viewActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.blognotas.R
 import com.example.blognotas.databinding.HomeActivityBinding
@@ -21,8 +22,10 @@ class ViewActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val bundle = intent.extras
-        var identificador = bundle?.getInt("identificador")
-        viewmodel.cargarLista(1)
+        var identificador : Int? = bundle?.getInt("identificador")
+
+
+                viewmodel.cargarLista(identificador!!)
 
                 viewmodel.resultadoList.observe(this,{
                    identificador=it.id
@@ -32,20 +35,29 @@ class ViewActivity : AppCompatActivity() {
                    binding.multilinea.setText(it.contenido)
                 })
 
+                viewmodel.resultadoBorrado.observe(this,{
+                    if (it==true){
+                        finish()
+                    }
+                })
 
-               binding.bEditar.setOnClickListener {
+
+              binding.bEditar.setOnClickListener {
                    val intent = Intent(this, EditActivity::class.java)
-                   intent.putExtra("id" , identificador )
+                   intent.putExtra("identificador",identificador)
                    startActivity(intent)
-                   finish()}
+                   finish()
+              }
+
+              binding.bEliminar.setOnClickListener {
+                   viewmodel.eliminarLista(identificador!!)
+              }
+
 
 
     }
 
 
 
-    private fun cargadoLista(){
-
-    }
 
 }

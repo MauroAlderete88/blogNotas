@@ -11,13 +11,14 @@ import domain.interactors.viewActivity.InteractorViewActivityImp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ui.view.EditActivity.EditActivityViewModel
 
 class ViewActivityViewModel @ViewModelInject constructor(
         val interactorViewActivity: InteractorViewActivityImp
 
 ) : ViewModel() {
-
     val resultadoList = MutableLiveData<lista>()
+    val resultadoBorrado = MutableLiveData<Boolean>()
 
     fun cargarLista(id : Int){
         viewModelScope.launch {
@@ -28,6 +29,13 @@ class ViewActivityViewModel @ViewModelInject constructor(
         }
     }
 
+    fun eliminarLista(identificador : Int){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                val resultado = interactorViewActivity.eliminarLista(identificador)
+                resultadoBorrado.postValue(resultado)
+            }
+        }
 
-
+    }
 }

@@ -16,6 +16,9 @@ interface listaDao {
     suspend fun deleteList(lista: lista)
 
     @Query("SELECT * FROM lista WHERE id = :id")
-    suspend fun buscarList(id:Int) : lista
+    suspend fun buscarList(id: Int) : lista
+
+    @Query("DELETE FROM lista WHERE id = :contact_id")
+    suspend fun deleteListById(contact_id: Int)
 
 }

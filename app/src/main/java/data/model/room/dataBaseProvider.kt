@@ -14,9 +14,9 @@ class dataBaseProvider @Inject constructor() : repositoryRoom {
 
     @Inject
     lateinit var listaDao: listaDao
-    @Inject
-    lateinit var  listaDeListasDao: listaDeListasDao
 
+    @Inject
+    lateinit var listaDeListasDao: listaDeListasDao
 
 
     override suspend fun nuevaLista(nombre: String, contenido: String, imagenPath: Int, backgroundPath: Int, fecha: String, pass: String): Boolean {
@@ -32,17 +32,16 @@ class dataBaseProvider @Inject constructor() : repositoryRoom {
         return !resultado.equals(-1)
     }
 
-    override suspend fun eliminarListaPorID(lista: lista): Boolean {
-          return false
+
+    override suspend fun eliminarListaPorID(identificador:Int): Boolean {
+        val resultado = listaDao.deleteListById(identificador)
+
+        return !resultado.equals(-1)
     }
 
     override suspend fun modificarListaPorID(lista: lista): Boolean {
-
         val resultado = listaDao.updateList(lista)
-
-
         if (!resultado.equals(-1)){
-           // listaDeListasDao.update(id)
         }
         return !resultado.equals(-1)
     }
@@ -61,13 +60,18 @@ class dataBaseProvider @Inject constructor() : repositoryRoom {
         return !resultado.equals(-1)
     }
 
+    override suspend fun eliminarListadeListas(identificador: Int)  {
+
+           listaDeListasDao.deletelistadelistasById(identificador)
+    }
+
     override suspend fun mostrarListas(): List<listaDeListas> {
          val resultado : List<listaDeListas> = listaDeListasDao.getListas()
          return resultado
     }
 
-    override suspend fun mostrarLista(id: Int):lista{
-        return listaDao.buscarList(id)
+    override suspend fun mostrarLista(id: Int):lista {
+         return listaDao.buscarList(id)
     }
 
 

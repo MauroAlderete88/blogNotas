@@ -33,11 +33,10 @@ class adapterRecycler(val lista: List<listaDeListas>) : RecyclerView.Adapter<ada
             )
             icono.layoutParams.height = 300
             titulo.text = lista.nombreLista
-
             background.setOnClickListener {
-              val id : Int = lista.id // Se envia a traves de intent a ViewActivity y hace carga de todoel contenido.
+              // Se envia a traves de intent a ViewActivity y hace carga de todoel contenido.
               val intento = Intent(itemView.context,ViewActivity::class.java)
-              intento.putExtra("identificador",id)
+              intento.putExtra("identificador",lista.id)
               itemView.context.startActivity(intento)
 
             }

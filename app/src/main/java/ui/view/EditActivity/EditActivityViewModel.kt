@@ -19,4 +19,8 @@ class EditActivityViewModel @ViewModelInject constructor(
             val resultadoOperacion = interactorEditActivity.guardarNuevaLista(titulo, contenido,imagen,color,pass)
             resultado.postValue(resultadoOperacion)
     }
+
+    fun recepcionIdentificador(id:Int){
+
+    }
 }

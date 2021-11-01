@@ -1,18 +1,24 @@
 package domain.interactors.viewActivity
 
+import android.widget.Toast
+import com.example.blognotas.R
+import data.model.room.dataBaseProvider
 import data.model.room.entities.lista
 import javax.inject.Inject
 
-class InteractorViewActivityImp @Inject constructor(): InteractorViewActivity {
+class InteractorViewActivityImp @Inject constructor(
+        val dataBaseProvider: dataBaseProvider
+): InteractorViewActivity {
 
-    val dataBaseProvider = data.model.room.dataBaseProvider()
-
-     override suspend fun cargaLista(id: Int) : lista {
-         return dataBaseProvider.mostrarLista(id)
+     override suspend fun cargaLista(id: Int) :lista  {
+        return dataBaseProvider.mostrarLista(id)
     }
 
-    override suspend fun eliminarLista(lista: lista): Boolean {
-       val resultado = dataBaseProvider.eliminarListaPorID(lista)
+    override suspend fun eliminarLista(identificador:Int): Boolean {
+       val resultado = dataBaseProvider.eliminarListaPorID(identificador)
+
+        if (resultado==true){ dataBaseProvider.eliminarListadeListas(identificador) }
+
        return resultado
     }
 

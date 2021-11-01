@@ -27,6 +27,10 @@ class EditActivity() : AppCompatActivity() {
     @Inject lateinit var providersGradient : providersGradientBackground
     @Inject lateinit var providersImages: providersImages
 
+    //Si viene desde viewActivity cambiar a true. El default sera false.
+    var banderaBoolean : Boolean =false
+    var identificador : Int = 0
+
     lateinit var binding: EditActivityBinding
     var iconoElejido:Int = R.drawable.aleatorio_image
     var background:Int = R.drawable.grandient_01_cardview
@@ -36,6 +40,12 @@ class EditActivity() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = EditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+       if (banderaBoolean==true){
+           val extras = intent.extras
+           identificador= extras?.getInt("identificador")!!
+       }
+
 
         //Spinner icons
         val adapterSpinnerImages = adapterSpinnerImages(this, providersImages.getList())
@@ -50,7 +60,6 @@ class EditActivity() : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedItem = parent!!.getItemAtPosition(position)
                 iconoElejido = selectedItem.hashCode()
-
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 //null

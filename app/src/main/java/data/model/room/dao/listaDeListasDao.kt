@@ -4,7 +4,7 @@ import androidx.room.*
 import data.model.room.entities.listaDeListas
 
 @Dao
-interface listaDeListasDao   {
+interface listaDeListasDao {
 
     @Query("SELECT * from listaDeListas")
 
@@ -15,5 +15,11 @@ interface listaDeListasDao   {
 
     @Update
      fun update(item:listaDeListas)
+
+     @Delete
+     fun delete(item:listaDeListas)
+
+    @Query("DELETE FROM listaDeListas WHERE id = :contact_id")
+    suspend fun deletelistadelistasById(contact_id: Int)
 
 }
