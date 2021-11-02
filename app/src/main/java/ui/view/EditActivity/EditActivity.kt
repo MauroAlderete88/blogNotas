@@ -8,10 +8,13 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withCreated
 import com.example.blognotas.R
 import com.example.blognotas.databinding.EditActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ui.view.EditActivity.adaptersSpinner.adapterSpinnerDegradeBackground
 import ui.view.EditActivity.adaptersSpinner.adapterSpinnerImages
 import ui.view.EditActivity.providers.providersGradientBackground
@@ -27,13 +30,14 @@ class EditActivity() : AppCompatActivity() {
     @Inject lateinit var providersGradient : providersGradientBackground
     @Inject lateinit var providersImages: providersImages
 
-    //Si viene desde viewActivity cambiar a true. El default sera false.
-    var banderaBoolean : Boolean =false
-    var identificador : Int = 0
+
 
     lateinit var binding: EditActivityBinding
     var iconoElejido:Int = R.drawable.aleatorio_image
     var background:Int = R.drawable.grandient_01_cardview
+
+    var banderaBoolean : Boolean? = false
+    var identificadorBandera : Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +45,21 @@ class EditActivity() : AppCompatActivity() {
         binding = EditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       if (banderaBoolean==true){
-           val extras = intent.extras
-           identificador= extras?.getInt("identificador")!!
-       }
 
+        val bundle = intent.extras
+        identificadorBandera  = bundle?.getInt("id")
+        banderaBoolean = bundle?.getBoolean("bandera")
+
+        if (banderaBoolean!=null){
+            editmodel.cargarLista(identificadorBandera!!)
+            editmodel.resultadoList.observe(
+                    this,{
+                        binding.etTitulo.setText(it.nombre)
+                        binding.contenido.setText(it.contenido)
+                    }
+            )
+
+        }
 
         //Spinner icons
         val adapterSpinnerImages = adapterSpinnerImages(this, providersImages.getList())
@@ -54,6 +68,7 @@ class EditActivity() : AppCompatActivity() {
         //Spinner degrade
         val adapterSpinnerGradient = adapterSpinnerDegradeBackground(this,providersGradient.getList())
         binding.SpinnerGradient.adapter = adapterSpinnerGradient
+
 
         //Evento del spinner iconos
         binding.SpinnerImage.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
@@ -80,16 +95,15 @@ class EditActivity() : AppCompatActivity() {
 
         }
 
+
+
         //Evento de boton guardar
         binding.bGuardar.setOnClickListener {
-            lifecycleScope.launch{
-                   checksNuls(binding.etTitulo.text.toString(),
-                            binding.contenido.text.toString(),
-                            iconoElejido,
-                            background,
-                           ""
-                    )
-            }
+                updateList(binding.etTitulo.text.toString(),
+                        binding.contenido.text.toString(),
+                        iconoElejido,
+                        background,
+                        "")
         }
 
 
@@ -103,12 +117,15 @@ class EditActivity() : AppCompatActivity() {
             }
         })
 
+        editmodel.resultadoList.observe(this,{
+            binding.etTitulo.setText(it.nombre)
+            binding.contenido.setText(it.contenido)
+        })
 
 
     }
 
-
-
+    //Chequea que la lista tenga un titulo. En casao de tener se lo envia al ViewModel.
        private suspend fun checksNuls(titulo : String, contenido : String, imagen : Int, color : Int, pass : String ){
            if (binding.etTitulo.text.toString().equals("")){
                Toast.makeText(this,"Es necesario agregar un titulo.", Toast.LENGTH_SHORT).show()
@@ -117,5 +134,29 @@ class EditActivity() : AppCompatActivity() {
               editmodel.crearLista(titulo , contenido , imagen , color , pass )
            }
        }
+
+    //Modifica la lista, siempre comprobando si esta existe o es nueva.
+       private fun updateList(titulo : String, contenido : String, imagen : Int, color : Int, pass : String){
+          if (banderaBoolean == null){
+              lifecycleScope.launch {
+                  withContext(Dispatchers.IO){
+                      checksNuls(titulo, contenido,imagen,color,pass)
+
+                  }
+              }
+
+          } else{
+              lifecycleScope.launch {
+                  withContext(Dispatchers.IO){
+                      editmodel.UpdateList(identificadorBandera?:0,titulo,contenido,imagen,color,pass)
+                      finish()
+                  }
+              }
+
+          }
+      }
+
+
+
 
 }

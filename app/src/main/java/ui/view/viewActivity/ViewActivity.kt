@@ -44,9 +44,9 @@ class ViewActivity : AppCompatActivity() {
 
               binding.bEditar.setOnClickListener {
                    val intent = Intent(this, EditActivity::class.java)
-                   intent.putExtra("identificador",identificador)
+                   intent.putExtra("id",identificador?:0)
+                   intent.putExtra("bandera",true)
                    startActivity(intent)
-                   finish()
               }
 
               binding.bEliminar.setOnClickListener {

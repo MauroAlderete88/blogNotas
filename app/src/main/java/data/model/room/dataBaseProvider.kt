@@ -18,6 +18,7 @@ class dataBaseProvider @Inject constructor() : repositoryRoom {
     @Inject
     lateinit var listaDeListasDao: listaDeListasDao
 
+    //TABLA LISTA
 
     override suspend fun nuevaLista(nombre: String, contenido: String, imagenPath: Int, backgroundPath: Int, fecha: String, pass: String): Boolean {
         val resultado = listaDao.insertList(lista(
@@ -31,24 +32,21 @@ class dataBaseProvider @Inject constructor() : repositoryRoom {
         ))
         return !resultado.equals(-1)
     }
-
-
     override suspend fun eliminarListaPorID(identificador:Int): Boolean {
         val resultado = listaDao.deleteListById(identificador)
-
         return !resultado.equals(-1)
     }
-
-    override suspend fun modificarListaPorID(lista: lista): Boolean {
-        val resultado = listaDao.updateList(lista)
-        if (!resultado.equals(-1)){
-        }
+    override suspend fun modificarListaPorID(identificador: Int, nombre: String, contenido: String, imagenPath: Int, backgroundPath: Int, fecha: String, pass: String): Boolean {
+       val resultado = listaDao.modificarList(identificador,nombre, contenido, imagenPath, backgroundPath, fecha, pass)
         return !resultado.equals(-1)
+    }
+    override suspend fun mostrarLista(id: Int):lista {
+        return listaDao.buscarList(id)
     }
 
 
-    override suspend fun agregarListadeListas( titulo:String,imagenPath :Int,backgroundPath:Int):Boolean
-    {
+    //TABLA LISTA DE LISTAS
+    override suspend fun agregarListadeListas( titulo:String,imagenPath :Int,backgroundPath:Int):Boolean {
         val resultado = listaDeListasDao.insertLista(
                 listaDeListas(
                         0,
@@ -59,20 +57,19 @@ class dataBaseProvider @Inject constructor() : repositoryRoom {
         )
         return !resultado.equals(-1)
     }
-
+    override suspend fun modificarListadeListas(identificador: Int, titulo: String, imagenPath: Int, backgroundPath: Int): Boolean {
+       val resultado =  listaDeListasDao.update(identificador,titulo,imagenPath,backgroundPath)
+        return !resultado.equals(-1)
+    }
     override suspend fun eliminarListadeListas(identificador: Int)  {
-
            listaDeListasDao.deletelistadelistasById(identificador)
     }
-
     override suspend fun mostrarListas(): List<listaDeListas> {
          val resultado : List<listaDeListas> = listaDeListasDao.getListas()
          return resultado
     }
 
-    override suspend fun mostrarLista(id: Int):lista {
-         return listaDao.buscarList(id)
-    }
+
 
 
 }

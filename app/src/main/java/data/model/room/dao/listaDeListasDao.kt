@@ -11,13 +11,13 @@ interface listaDeListasDao {
     fun getListas():List<listaDeListas>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertLista(item:listaDeListas)
-
-    @Update
-     fun update(item:listaDeListas)
+    suspend fun insertLista(item: listaDeListas)
 
      @Delete
-     fun delete(item:listaDeListas)
+     fun delete(item: listaDeListas)
+
+    @Query("UPDATE listaDeListas SET nombreLista = :titulo, pathImage = :imagenPath, background_path_gradient= :backgroundPath WHERE id = :id")
+    fun update(id: Int,titulo: String, imagenPath: Int, backgroundPath: Int)
 
     @Query("DELETE FROM listaDeListas WHERE id = :contact_id")
     suspend fun deletelistadelistasById(contact_id: Int)
