@@ -1,10 +1,11 @@
 package ui.view.HomeActivity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.blognotas.databinding.HomeActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 import ui.view.EditActivity.EditActivity
@@ -22,8 +23,8 @@ class HomeActivity : AppCompatActivity() {
 
         viewmodel.ejecutarRecycler()
 
-        viewmodel.listaRecycler.observe(this,{
-            binding.recyclerView.layoutManager = GridLayoutManager (this,2)
+        viewmodel.listaRecycler.observe(this, {
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
             val adapter = adapterRecycler(it)
             binding.recyclerView.adapter = adapter
         })
@@ -32,13 +33,23 @@ class HomeActivity : AppCompatActivity() {
             abrirActivityEdit()
         }
 
+        //refresh
+        binding.swipeRefresh.setOnRefreshListener {
+            this.recreate()
+            binding.swipeRefresh.isRefreshing = false
+        }
+
+
+
 
     }
 
     fun abrirActivityEdit(){
-        val intent = Intent(this,EditActivity::class.java)
+        val intent = Intent(this, EditActivity::class.java)
         startActivity(intent)
+
     }
+
 
 
 }

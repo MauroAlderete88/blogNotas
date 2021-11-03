@@ -8,9 +8,10 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import com.example.blognotas.R
 
-class adapterSpinnerDegradeBackground(contexto: Context, lista: List<spinnerGradient>):ArrayAdapter<spinnerGradient>
-    (contexto,0,lista) {
+class adapterSpinnerDegradeBackground(contexto: Context, listaGradiet: List<spinnerGradient>):ArrayAdapter<spinnerGradient>
+    (contexto,0,listaGradiet) {
 
+    var gradient : List<spinnerGradient> = listaGradiet
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return initView(position, convertView, parent)
@@ -25,6 +26,7 @@ class adapterSpinnerDegradeBackground(contexto: Context, lista: List<spinnerGrad
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.spinner_background_gradient, parent, false)
         var iconImage = view.findViewById<ImageView>(R.id.gradientSpinner)
         iconImage.setImageResource(imagen!!.imagen)
+
         return view
     }
 }

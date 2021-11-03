@@ -53,6 +53,12 @@ class ViewActivity : AppCompatActivity() {
                    viewmodel.eliminarLista(identificador!!)
               }
 
+        //refresh
+        binding.swipeRefresh.setOnRefreshListener {
+            this.recreate()
+            binding.swipeRefresh.isRefreshing = false
+        }
+
 
 
     }

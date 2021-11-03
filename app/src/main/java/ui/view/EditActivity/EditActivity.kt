@@ -56,6 +56,7 @@ class EditActivity() : AppCompatActivity() {
                     this,{
                         binding.etTitulo.setText(it.nombre)
                         binding.contenido.setText(it.contenido)
+
                     }
             )
 
@@ -138,21 +139,15 @@ class EditActivity() : AppCompatActivity() {
     //Modifica la lista, siempre comprobando si esta existe o es nueva.
        private fun updateList(titulo : String, contenido : String, imagen : Int, color : Int, pass : String){
           if (banderaBoolean == null){
-              lifecycleScope.launch {
-                  withContext(Dispatchers.IO){
-                      checksNuls(titulo, contenido,imagen,color,pass)
-
-                  }
+              lifecycleScope.launch (Dispatchers.IO){
+                  checksNuls(titulo, contenido,imagen,color,pass)
               }
 
           } else{
-              lifecycleScope.launch {
-                  withContext(Dispatchers.IO){
-                      editmodel.UpdateList(identificadorBandera?:0,titulo,contenido,imagen,color,pass)
-                      finish()
-                  }
+              lifecycleScope.launch (Dispatchers.IO) {
+                  editmodel.UpdateList(identificadorBandera?:0,titulo,contenido,imagen,color,pass)
+                  finish()
               }
-
           }
       }
 

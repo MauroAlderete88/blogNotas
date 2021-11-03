@@ -23,12 +23,10 @@ class HomeActivityViewModel @ViewModelInject constructor(
         val listaRecycler = MutableLiveData<List<listaDeListas>>()
 
         fun ejecutarRecycler(){
-            viewModelScope.launch {
-                withContext(Dispatchers.IO){
+            viewModelScope.launch (Dispatchers.IO){
                     val resultado = interactorHomeActivity.ObtenerDatosParaRecyclerView()
                     listaRecycler.postValue(resultado)
                 }
-            }
         }
 
 

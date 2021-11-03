@@ -21,21 +21,16 @@ class ViewActivityViewModel @ViewModelInject constructor(
     val resultadoBorrado = MutableLiveData<Boolean>()
 
     fun cargarLista(id : Int){
-        viewModelScope.launch {
-            withContext(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
                 val resultado = interactorViewActivity.cargaLista(id)
                 resultadoList.postValue(resultado)
-            }
         }
     }
 
     fun eliminarLista(identificador : Int){
-        viewModelScope.launch {
-            withContext(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
                 val resultado = interactorViewActivity.eliminarLista(identificador)
                 resultadoBorrado.postValue(resultado)
-            }
         }
-
     }
 }

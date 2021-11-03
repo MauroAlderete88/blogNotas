@@ -32,11 +32,9 @@ class EditActivityViewModel @ViewModelInject constructor(
    }
 
     fun cargarLista(id : Int){
-        viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                val resultado = interactorEditActivity.cargarLista(id)
+        viewModelScope.launch (Dispatchers.IO){
+            val resultado = interactorEditActivity.cargarLista(id)
                 resultadoList.postValue(resultado)
-            }
         }
     }
 }

@@ -22,7 +22,6 @@ class adapterSpinnerImages (contexto : Context, list:  List<spinnerImage>) : Arr
 
     private fun initView(position: Int, convertView: View?, parent: ViewGroup): View {
 
-
         val imagen = getItem(position)
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.spinner_image, parent, false)
         var iconImage = view.findViewById<ImageView>(R.id.gradientSpinn)

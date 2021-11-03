@@ -16,10 +16,8 @@ class InteractorViewActivityImp @Inject constructor(
 
     override suspend fun eliminarLista(identificador:Int): Boolean {
        val resultado = dataBaseProvider.eliminarListaPorID(identificador)
-
         if (resultado==true){ dataBaseProvider.eliminarListadeListas(identificador) }
-
-       return resultado
+        return resultado
     }
 
     override suspend fun modificar() {
