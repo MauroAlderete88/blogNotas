@@ -34,7 +34,7 @@ class EditActivity() : AppCompatActivity() {
 
 
     lateinit var binding: EditActivityBinding
-    var iconoElejido:Int = R.drawable.aleatorio_image
+    var iconoElejido:Int = R.drawable.indio
     var background:Int = R.drawable.gradient_01_background
     var banderaBoolean : Boolean? = false
     var identificadorBandera : Int? = null
