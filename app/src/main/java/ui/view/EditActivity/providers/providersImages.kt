@@ -19,4 +19,8 @@ class providersImages @Inject constructor() {
         return listadoDeIconos
     }
 
+    fun getPosition (valor : Int) : Int{
+       return listadoDeIconos.indexOf(spinnerImage(valor))
+    }
+
 }

@@ -13,11 +13,9 @@
         tools:ignore="MissingClass">
         <activity android:name="ui.view.viewActivity.ViewActivity"></activity>
         <activity android:name="ui.view.EditActivity.EditActivity" />
-        <activity android:name="ui.view.HomeActivity.HomeActivity" />
-        <activity android:name="ui.view.ScreenSplash">
-            <intent-filter>
+        <activity android:name="ui.view.HomeActivity.HomeActivity" android:theme="@style/SplashScreen">
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

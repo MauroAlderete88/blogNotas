@@ -1,82 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:id="@+id/swipe_refresh"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pagina"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_01_background"
-    tools:context="ui.view.viewActivity.ViewActivity">
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/banner"
-        android:layout_width="412dp"
-        android:layout_height="182dp"
-        android:background="@drawable/grandient_01_cardview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:id="@+id/pagina"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="ui.view.viewActivity.ViewActivity">
 
-        <Button
-            android:id="@+id/b_editar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
-            android:text="Editar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="182dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/iv_icon_viewActivity"
             android:layout_width="154dp"
             android:layout_height="149dp"
             android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/banner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/pina" />
 
         <TextView
-            android:id="@+id/tx_titulo_viewactivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="36dp"
-            android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/iv_icon_viewActivity"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/tx_titulo_viewactivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="36dp"
+                android:fontFamily="sans-serif-thin"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_icon_viewActivity"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+
+        <ImageButton
             android:id="@+id/b_eliminar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="3dp"
-            android:text="Eliminar"
-            app:layout_constraintBottom_toTopOf="@+id/b_editar"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/banner"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/radius_button"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
+
+        <ImageButton
+            android:id="@+id/b_editar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/radius_button"
+            app:layout_constraintBottom_toBottomOf="@+id/banner"
+            app:layout_constraintEnd_toStartOf="@+id/b_eliminar"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <EditText
+            android:id="@+id/multilinea"
+            android:layout_width="371dp"
+            android:layout_height="522dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/banner" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <EditText
-        android:id="@+id/multilinea"
-        android:layout_width="371dp"
-        android:layout_height="522dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/banner" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

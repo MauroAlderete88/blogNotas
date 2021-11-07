@@ -31,7 +31,8 @@ class adapterRecycler(val lista: List<listaDeListas>) : RecyclerView.Adapter<ada
                             icon
                     )
             )
-            icono.layoutParams.height = 300
+            //icono.layoutParams.height = 100
+
             titulo.text = lista.nombreLista
             background.setOnClickListener {
               // Se envia a traves de intent a ViewActivity y hace carga de todoel contenido.

@@ -11,7 +11,7 @@ import com.example.blognotas.R
 class adapterSpinnerDegradeBackground(contexto: Context, listaGradiet: List<spinnerGradient>):ArrayAdapter<spinnerGradient>
     (contexto,0,listaGradiet) {
 
-    var gradient : List<spinnerGradient> = listaGradiet
+    var gradient: List<spinnerGradient> = listaGradiet
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return initView(position, convertView, parent)
@@ -21,12 +21,16 @@ class adapterSpinnerDegradeBackground(contexto: Context, listaGradiet: List<spin
         return initView(position, convertView, parent)
     }
 
-    private fun initView( position: Int, convertView: View?, parent: ViewGroup) : View{
+    private fun initView(position: Int, convertView: View?, parent: ViewGroup): View {
         val imagen = getItem(position)
-        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.spinner_background_gradient, parent, false)
+        val view = convertView
+                ?: LayoutInflater.from(context).inflate(R.layout.spinner_background_gradient, parent, false)
+
         var iconImage = view.findViewById<ImageView>(R.id.gradientSpinner)
         iconImage.setImageResource(imagen!!.imagen)
-
         return view
     }
+
+
 }
+

@@ -3,6 +3,8 @@ package ui.view.viewActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
+import android.text.Spanned
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.blognotas.R
@@ -32,7 +34,7 @@ class ViewActivity : AppCompatActivity() {
                    binding.ivIconViewActivity.setImageResource(it.pathImage)
                    binding.txTituloViewactivity.setText(it.nombre)
                    binding.banner.setBackgroundResource(it.backgroundColor)
-                   binding.multilinea.setText(it.contenido)
+                   binding.multilinea.setText(conversorTexto(it.contenido))
                 })
 
                 viewmodel.resultadoBorrado.observe(this,{
@@ -61,9 +63,14 @@ class ViewActivity : AppCompatActivity() {
 
 
 
+
+
     }
 
 
-
+    fun conversorTexto( texto : String) : Spanned {
+        var formattedString = Html.fromHtml(texto)
+        return formattedString
+    }
 
 }

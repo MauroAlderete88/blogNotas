@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.blognotas.R
 import com.example.blognotas.databinding.HomeActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 import ui.view.EditActivity.EditActivity
@@ -17,6 +18,8 @@ class HomeActivity : AppCompatActivity() {
     lateinit var binding: HomeActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Thread.sleep(1000)
+        setTheme(R.style.Theme_BlogNotas)
         super.onCreate(savedInstanceState)
         binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)

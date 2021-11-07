@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ui.view.EditActivity.adaptersSpinner.adapterSpinnerDegradeBackground
 import ui.view.EditActivity.adaptersSpinner.adapterSpinnerImages
+import ui.view.EditActivity.adaptersSpinner.spinnerGradient
 import ui.view.EditActivity.providers.providersGradientBackground
 import ui.view.EditActivity.providers.providersImages
 import ui.view.HomeActivity.HomeActivity
@@ -34,8 +35,7 @@ class EditActivity() : AppCompatActivity() {
 
     lateinit var binding: EditActivityBinding
     var iconoElejido:Int = R.drawable.aleatorio_image
-    var background:Int = R.drawable.grandient_01_cardview
-
+    var background:Int = R.drawable.gradient_01_background
     var banderaBoolean : Boolean? = false
     var identificadorBandera : Int? = null
 
@@ -50,14 +50,14 @@ class EditActivity() : AppCompatActivity() {
         identificadorBandera  = bundle?.getInt("id")
         banderaBoolean = bundle?.getBoolean("bandera")
 
+
         if (banderaBoolean!=null){
             editmodel.cargarLista(identificadorBandera!!)
             editmodel.resultadoList.observe(
                     this,{
                         binding.etTitulo.setText(it.nombre)
                         binding.contenido.setText(it.contenido)
-
-                    }
+              }
             )
 
         }
@@ -65,6 +65,7 @@ class EditActivity() : AppCompatActivity() {
         //Spinner icons
         val adapterSpinnerImages = adapterSpinnerImages(this, providersImages.getList())
         binding.SpinnerImage.adapter = adapterSpinnerImages
+
 
         //Spinner degrade
         val adapterSpinnerGradient = adapterSpinnerDegradeBackground(this,providersGradient.getList())
@@ -108,6 +109,52 @@ class EditActivity() : AppCompatActivity() {
         }
 
 
+        //Botones de edicion
+
+        //Boton negrita
+        binding.bBold.setOnClickListener {
+            var parcial: String = binding.contenido.text.toString()
+            val query: String = "<b></b>"
+            val resultado = "$parcial$query"
+            val posicion: Int = resultado.length - 4
+            binding.contenido.setText(resultado)
+            binding.contenido.setSelection(posicion)
+        }
+        //boton italica o cursiva
+        binding.bItalica.setOnClickListener{
+            var parcial: String = binding.contenido.text.toString()
+            val query: String = "<i></i>"
+            val resultado = "$parcial$query"
+            val posicion: Int = resultado.length - 4
+            binding.contenido.setText(resultado)
+            binding.contenido.setSelection(posicion)
+        }
+        //boton subrayado
+        binding.bSubrayado.setOnClickListener {
+            var parcial: String = binding.contenido.text.toString()
+            val query: String = "<u></u>"
+            val resultado = "$parcial$query"
+            val posicion: Int = resultado.length - 4
+            binding.contenido.setText(resultado)
+            binding.contenido.setSelection(posicion)
+        }
+
+        binding.bSatoLinea.setOnClickListener {
+            var parcial: String = binding.contenido.text.toString()
+            val query: String = "<br>"
+            val resultado = "$parcial$query"
+            val posicion: Int = resultado.length
+            binding.contenido.setText(resultado)
+            binding.contenido.setSelection(posicion)
+        }
+
+        binding.bIrFinal.setOnClickListener{
+            var parcial: String = binding.contenido.text.toString()
+            binding.contenido.setSelection(parcial.length)
+        }
+
+
+
 
         //Observers
         editmodel.resultado.observe(this,{
@@ -121,6 +168,8 @@ class EditActivity() : AppCompatActivity() {
         editmodel.resultadoList.observe(this,{
             binding.etTitulo.setText(it.nombre)
             binding.contenido.setText(it.contenido)
+            binding.SpinnerGradient.setSelection(providersGradient.getPosition(it.backgroundColor))
+            binding.SpinnerImage.setSelection(providersImages.getPosition(it.pathImage))
         })
 
 
